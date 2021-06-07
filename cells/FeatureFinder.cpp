@@ -103,32 +103,32 @@ struct FeatureFinder {
     }
 
     // Find keypoints in the current image
-#if (CV_MAJOR_VERSION ==3)
+//#if (CV_MAJOR_VERSION ==3)
     cv::Ptr<cv::ORB> orb = cv::ORB::create(*n_features_, *scale_factor_, *n_levels_);
-#elif (CV_MAJOR_VERSION == 2) && (CV_MINOR_VERSION >= 4)
-    cv::ORB orb = cv::ORB(*n_features_, *scale_factor_, *n_levels_);
-#else
-    cv::ORB::CommonParams orb_params;
-    orb_params.first_level_ = 0;
-    orb_params.n_levels_ = *n_levels_;
-    orb_params.scale_factor_ = *scale_factor_;
-    cv::ORB orb = cv::ORB(*n_features_, orb_params);
-#endif
+//#elif (CV_MAJOR_VERSION == 2) && (CV_MINOR_VERSION >= 4)
+//    cv::ORB orb = cv::ORB(*n_features_, *scale_factor_, *n_levels_);
+//#else
+    //cv::ORB::CommonParams orb_params;
+//    orb_params.first_level_ = 0;
+//    orb_params.n_levels_ = *n_levels_;
+//    orb_params.scale_factor_ = *scale_factor_;
+//    cv::ORB orb = cv::ORB(*n_features_, orb_params);
+//#endif
 
     cv::Mat descriptors;
     if (*use_fast_) {
       cv::FAST(*image_, *keypoints_, 30);
-#if (CV_MAJOR_VERSION ==3)
+//#if (CV_MAJOR_VERSION ==3)
       orb->detectAndCompute(*image_, mask, *keypoints_, descriptors, true);
-#else
-      orb(*image_, mask, *keypoints_, descriptors, true);
-#endif
+//#else
+//      orb(*image_, mask, *keypoints_, descriptors, true);
+//#endif
     } else {
-#if (CV_MAJOR_VERSION ==3)
+//#if (CV_MAJOR_VERSION ==3)
       orb->detectAndCompute(*image_, mask, *keypoints_, descriptors);
-#else
-      orb(*image_, mask, *keypoints_, descriptors);
-#endif
+//#else
+//      orb(*image_, mask, *keypoints_, descriptors);
+//#endif
     }
 
     // Remove bad keypoints
